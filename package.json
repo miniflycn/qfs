@@ -1,0 +1,23 @@
+{
+  "name": "qfs",
+  "version": "0.0.1",
+  "description": "Virtual File Tools build for Ques.",
+  "main": "src/qfs.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "gaze": "^0.5.2",
+    "lru-cache": "^2.7.0",
+    "vinyl": "^1.1.0"
+  },
+  "devDependencies": {
+    "mocha": "^2.3.3",
+    "should": "^7.1.1"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "Daniel Yang",
+  "license": "MIT"
+}
