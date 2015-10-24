@@ -54,16 +54,17 @@ var QFS = (function (_super) {
         gaze(param.files, function (err, watcher) {
             watcher.on('all', function (e, filename) {
                 var cache = _this.cache;
-                if (e === 'changed') {
-                    cache.has(filename) && cache.del(filename);
+                switch (e) {
+                    case 'changed':
+                        cache.has(filename) && cache.del(filename);
+                        break;
+                    case 'added':
+                        watcher.add(filename);
+                        break;
+                    case 'deleted':
+                        watcher.remove(filename);
+                        break;
                 }
-                else if (e === 'added') {
-                    watcher.add(filename);
-                }
-                else if (e === 'deleted') {
-                    watcher.remove(filename);
-                }
-                console.log(e, filename);
             });
         });
     };

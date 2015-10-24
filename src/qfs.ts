@@ -42,14 +42,17 @@ class QFS extends FileCache {
         gaze(param.files, (err, watcher) => {
             watcher.on('all', (e, filename) => {
                 let cache = this.cache;
-                if (e === 'changed') {
-                    cache.has(filename) && cache.del(filename);
-                } else if (e === 'added') {
-                    watcher.add(filename);
-                } else if (e === 'deleted') {
-                    watcher.remove(filename);
+                switch(e) {
+                    case 'changed':
+                        cache.has(filename) && cache.del(filename);
+                        break;
+                    case 'added':
+                        watcher.add(filename);
+                        break;
+                    case 'deleted':
+                        watcher.remove(filename);
+                        break;
                 }
-                console.log(e, filename);
             });
         });
     }
@@ -60,7 +63,7 @@ class QFS extends FileCache {
         * 0 means no cache
         */
         max?: number,
-        /**
+        /**ı
          * files need to be watched
          */
         files?: string | string[]
