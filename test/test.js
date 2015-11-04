@@ -1,6 +1,3 @@
-/// <reference path="../typings/mocha/mocha.d.ts" />
-/// <reference path="../typings/should/should.d.ts" />
-/// <reference path="../typings/tsd.d.ts" />
 var path = require('path');
 var fs = require('fs');
 var QFS = require('../src/qfs');

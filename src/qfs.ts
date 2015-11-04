@@ -1,5 +1,3 @@
-/// <reference path="../typings/tsd.d.ts" />
-
 import fs = require('fs');
 import File = require('vinyl');
 import gaze = require('gaze');
