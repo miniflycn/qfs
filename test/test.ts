@@ -28,19 +28,21 @@ describe("QFS", () => {
             fileYou = path.join(__dirname, 'feature/you.js'),
             file = qfs.read(fileYou);
 
-        (qfs.get(fileMe) === null).should.be.true;
+        (qfs.get(fileMe) === undefined).should.be.true;
     });
 
     it('should watch file changed', (done) => {
         let filename = path.join(__dirname, 'feature/my.js');
 
         qfs.read(filename);
-        (qfs.get(filename) === null).should.be.false;
+        (qfs.get(filename) === undefined).should.false;
 
         fs.writeFileSync(filename, newContents, 'utf-8');
         fs.writeFileSync(filename, myContents, 'utf-8');
-
-        (qfs.get(filename) === null).should.be.true;
-        done();
+        
+        setTimeout(function () {
+            (qfs.get(filename) === undefined).should.true;
+            done();
+        }, 100);
     });
 });
