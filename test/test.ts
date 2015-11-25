@@ -2,7 +2,7 @@ import path = require('path');
 import fs = require('fs');
 import QFS = require('../src/qfs');
 
-let qfs = QFS({
+let qfs = QFS.create({
     max: 1,
     files: 'test/feature/**'
 });

@@ -334,6 +334,7 @@ declare module NodeJS {
         undefined: typeof undefined;
         unescape: (str: string) => string;
         gc: () => void;
+        v8debug?: any;
     }
 
     export interface Timer {
@@ -523,41 +524,41 @@ declare module "http" {
      */
     export interface ClientResponse extends IncomingMessage { }
 
-    export interface AgentOptions {
-        /**
-         * Keep sockets around in a pool to be used by other requests in the future. Default = false
-         */
-        keepAlive?: boolean;
-        /**
-         * When using HTTP KeepAlive, how often to send TCP KeepAlive packets over sockets being kept alive. Default = 1000.
-         * Only relevant if keepAlive is set to true.
-         */
-        keepAliveMsecs?: number;
-        /**
-         * Maximum number of sockets to allow per host. Default for Node 0.10 is 5, default for Node 0.12 is Infinity
-         */
-        maxSockets?: number;
-        /**
-         * Maximum number of sockets to leave open in a free state. Only relevant if keepAlive is set to true. Default = 256.
-         */
-        maxFreeSockets?: number;
-    }
+	export interface AgentOptions {
+		/**
+		 * Keep sockets around in a pool to be used by other requests in the future. Default = false
+		 */
+		keepAlive?: boolean;
+		/**
+		 * When using HTTP KeepAlive, how often to send TCP KeepAlive packets over sockets being kept alive. Default = 1000.
+		 * Only relevant if keepAlive is set to true.
+		 */
+		keepAliveMsecs?: number;
+		/**
+		 * Maximum number of sockets to allow per host. Default for Node 0.10 is 5, default for Node 0.12 is Infinity
+		 */
+		maxSockets?: number;
+		/**
+		 * Maximum number of sockets to leave open in a free state. Only relevant if keepAlive is set to true. Default = 256.
+		 */
+		maxFreeSockets?: number;
+	}
 
     export class Agent {
-        maxSockets: number;
-        sockets: any;
-        requests: any;
+		maxSockets: number;
+		sockets: any;
+		requests: any;
 
-        constructor(opts?: AgentOptions);
+		constructor(opts?: AgentOptions);
 
-        /**
-         * Destroy any sockets that are currently in use by the agent.
-         * It is usually not necessary to do this. However, if you are using an agent with KeepAlive enabled,
-         * then it is best to explicitly shut down the agent when you know that it will no longer be used. Otherwise,
-         * sockets may hang open for quite a long time before the server terminates them.
-         */
-        destroy(): void;
-    }
+		/**
+		 * Destroy any sockets that are currently in use by the agent.
+		 * It is usually not necessary to do this. However, if you are using an agent with KeepAlive enabled,
+		 * then it is best to explicitly shut down the agent when you know that it will no longer be used. Otherwise,
+		 * sockets may hang open for quite a long time before the server terminates them.
+		 */
+		destroy(): void;
+	}
 
     export var METHODS: string[];
 
@@ -757,7 +758,7 @@ declare module "punycode" {
     export function toASCII(domain: string): string;
     export var ucs2: ucs2;
     interface ucs2 {
-        decode(string: string): string;
+        decode(string: string): number[];
         encode(codePoints: number[]): string;
     }
     export var version: any;
@@ -916,21 +917,7 @@ declare module "child_process" {
 
 declare module "url" {
     export interface Url {
-        href: string;
-        protocol: string;
-        auth: string;
-        hostname: string;
-        port: string;
-        host: string;
-        pathname: string;
-        search: string;
-        query: any; // string | Object
-        slashes: boolean;
-        hash?: string;
-        path?: string;
-    }
-
-    export interface UrlOptions {
+        href?: string;
         protocol?: string;
         auth?: string;
         hostname?: string;
@@ -938,13 +925,14 @@ declare module "url" {
         host?: string;
         pathname?: string;
         search?: string;
-        query?: any;
+        query?: any; // string | Object
+        slashes?: boolean;
         hash?: string;
         path?: string;
     }
 
     export function parse(urlStr: string, parseQueryString?: boolean , slashesDenoteHost?: boolean ): Url;
-    export function format(url: UrlOptions): string;
+    export function format(url: Url): string;
     export function resolve(from: string, to: string): string;
 }
 
@@ -1020,10 +1008,10 @@ declare module "net" {
     }
     export function createServer(connectionListener?: (socket: Socket) =>void ): Server;
     export function createServer(options?: { allowHalfOpen?: boolean; }, connectionListener?: (socket: Socket) =>void ): Server;
-    export function connect(options: { allowHalfOpen?: boolean; }, connectionListener?: Function): Socket;
+    export function connect(options: { port: number, host?: string, localAddress? : string, localPort? : string, family? : number, allowHalfOpen?: boolean; }, connectionListener?: Function): Socket;
     export function connect(port: number, host?: string, connectionListener?: Function): Socket;
     export function connect(path: string, connectionListener?: Function): Socket;
-    export function createConnection(options: { allowHalfOpen?: boolean; }, connectionListener?: Function): Socket;
+    export function createConnection(options: { port: number, host?: string, localAddress? : string, localPort? : string, family? : number, allowHalfOpen?: boolean; }, connectionListener?: Function): Socket;
     export function createConnection(port: number, host?: string, connectionListener?: Function): Socket;
     export function createConnection(path: string, connectionListener?: Function): Socket;
     export function isIP(input: string): number;

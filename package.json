@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Virtual File Tools build for Ques.",
   "main": "src/qfs.js",
+  "typings": "./src/qfs.d.ts",
   "directories": {
     "test": "test"
   },
